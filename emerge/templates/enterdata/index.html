@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>EMERGE - Data Portal</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Fonts -->
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom Theme CSS -->
+    <link href="{% static 'css/grayscale.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">
+                    <i class="fa fa-play-circle"></i>  <span class="light">EMERGE</span>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+
+                    <form class="navbar-form navbar-right" id="login_form" method="post" action="/emerge/login/">
+
+
+                         {% csrf_token %}
+
+                        <div class="form-group">
+                            <input type="text" placeholder ="Username" name="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder = "Password" name = "password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-default">Sign in</button>
+                    </form>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="row-fluid">
+        <div class="span6">
+            {% if bad_details %}
+            <p><strong>Your username and/or password were incorrect!</strong></p>
+            {% elif disabled_account %}
+            <p><strong>Your Rango account is currently disabled; we can't log you in!</strong></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <section class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">EMERGE</h1>
+                        <p class="intro-text">Data Portal:</p><p>{{ welcome }}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>About EMERGE</h2>
+                <p>Placeholder for now.  Will contain description of EMERGE Program.</p>
+                <p>This striking, black and white theme features stock photographs by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Map skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
+                <p>With this template, just the slightest splash of color can make a huge impact on the overall presentation and design.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <footer>
+        <div class="container">
+            <p>&copy; EMERGE: Data Entry Portal 2014</p>
+        </div>
+    </footer>
+
+
+    <!-- Core JavaScript Files -->
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - You will need to use your own API key to use the map feature -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'js/grayscale.js' %}"></script>
+
+</body>
+
+</html>

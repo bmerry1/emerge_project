@@ -1,0 +1,11 @@
+<html>
+<body>
+<h1>Participants</h1>
+	{% for participant in all_participants %}
+	<div>
+		<h2><a href="/emerge/participant/{{ participant.id }}/">{{ participant.participant_fname }}</a></h2>
+		<p>{{ participant.participant_lname }}</p>
+	</div>
+	{% endfor %}
+</body>
+</html>
