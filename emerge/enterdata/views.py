@@ -81,17 +81,7 @@ def participant(request, participants_id=1):
 	return render_to_response('enterdata/participant.html',
 								{'participant': Participant.objects.get(id=participants_id) })
 
-class EditParticipantAddressView(UpdateView):
-	
-	model = Participant
-	template_name = 'edit_addresses.html'
-	form_class = forms.ParticpantAddressFormSet
+#def submit_address(request):
+#	if request.POST:
 
-	def get_success_url(self):
-
-		return self.get_object().get_absolute_url()
-
-	if request.method == 'POST':
-		form = ParticpantAddressFormSet
-
-	model = 
+#		form = 
