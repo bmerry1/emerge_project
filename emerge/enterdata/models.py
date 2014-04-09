@@ -44,4 +44,13 @@ class Address(models.Model):
 			self.address_state,
 		])
 
+class Phone(models.Model):
 
+	participant = models.ForeignKey(Participant)
+	phone_type = models.CharField(max_length=200)
+	phone_number = models.CharField(max_length=10)
+	phone_date = models.DateField()
+
+	def __unicode__(self):
+		return self.phone_number
+		

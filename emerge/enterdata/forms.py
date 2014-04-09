@@ -47,5 +47,4 @@ class ParticipantsForm(forms.ModelForm):
 ParticpantAddressFormSet = inlineformset_factory(
 	Participant,
 	Address,
-	can_delete=False,
 )

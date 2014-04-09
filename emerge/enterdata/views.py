@@ -2,7 +2,8 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from enterdata.forms import ParticipantsForm
+from django.views.generic import CreateView
+from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet
 from enterdata.models import Participant
 
 
@@ -80,6 +81,50 @@ def all_participants(request):
 def participant(request, participants_id=1):
 	return render_to_response('enterdata/participant.html',
 								{'participant': Participant.objects.get(id=participants_id) })
+
+class ParticipantCreateView(CreateView):
+
+	model = Participant
+	template_name = 'enterdata/add_participant.html'
+	form_class = ParticipantsForm
+	success_url = '/emerge/all_participants/'
+
+	def get(self, request, *args, **kwargs):
+
+		self.object = None
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		address_form = ParticpantAddressFormSet()
+
+		# redirect to Participant view.
+		return self.render_to_response(
+			self.get_context_data(form=form,
+										address_form=address_form))
+
+	def post(self, request, *args, **kwargs):
+		self.object = None
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		address_form = ParticpantAddressFormSet(self.request.POST)
+		if (form.is_valid() and address_form.is_valid()):
+			return self.form_valid(form, address_form)
+		else:
+			return self.form_invalid(form, address_form)
+
+	def form_valid(self, form, address_form):
+
+		self.object = form.save()
+		address_form.instance = self.object
+		address_form.save()
+		return HttpResponseRedirect(self.get_success_url())
+
+	def form_invalid(self, form, address_form):
+
+		return self.render_to_response(
+			self.get_context_data(form=form,
+								  address_form=address_form))
+
+		
 
 #def submit_address(request):
 #	if request.POST:
