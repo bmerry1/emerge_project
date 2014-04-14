@@ -3,8 +3,8 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import CreateView
-from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet
-from enterdata.models import Participant
+from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet, PhoneForm, ParticpantPhoneFormSet
+from enterdata.models import Participant, Phone
 
 
 # Create your views here.
@@ -82,6 +82,7 @@ def participant(request, participants_id=1):
 	return render_to_response('enterdata/participant.html',
 								{'participant': Participant.objects.get(id=participants_id) })
 
+# CBV for creating inline forms
 class ParticipantCreateView(CreateView):
 
 	model = Participant
@@ -91,6 +92,13 @@ class ParticipantCreateView(CreateView):
 
 	def get(self, request, *args, **kwargs):
 
+		#context = super(ParticipantCreateView, self).get_context_data(**kwargs)
+		#if self.request.POST:
+		#	context['formset'] = ParticpantAddressFormSet(self.request.POST)
+		#else:
+		#	context['formset'] = ParticpantAddressFormSet()
+		#return context
+
 		self.object = None
 		form_class = self.get_form_class()
 		form = self.get_form(form_class)
@@ -98,8 +106,7 @@ class ParticipantCreateView(CreateView):
 
 		# redirect to Participant view.
 		return self.render_to_response(
-			self.get_context_data(form=form,
-										address_form=address_form))
+			self.get_context_data(form=form, address_form=address_form))
 
 	def post(self, request, *args, **kwargs):
 		self.object = None
@@ -112,6 +119,17 @@ class ParticipantCreateView(CreateView):
 			return self.form_invalid(form, address_form)
 
 	def form_valid(self, form, address_form):
+		#context = self.get_context_data()
+		#formset = context['formset']
+		#if formset.is_valid():
+		#	self.object = form.save()
+		#	formset.instance = self.object
+		#	formset.save()
+		#	return HttpResponseRedirect(self.get_success_url())
+
+		#else:
+		#	return self.render_to_response(
+		#	self.get_context_data(form=form))
 
 		self.object = form.save()
 		address_form.instance = self.object
@@ -121,8 +139,7 @@ class ParticipantCreateView(CreateView):
 	def form_invalid(self, form, address_form):
 
 		return self.render_to_response(
-			self.get_context_data(form=form,
-								  address_form=address_form))
+			self.get_context_data(form=form, address_form=address_form))
 
 		
 

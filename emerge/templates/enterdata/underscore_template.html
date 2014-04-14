@@ -1,0 +1,35 @@
+<script>
+	$('.add-address').click(function(ev){
+		ev.preventDefault();
+		var count = $('.address').children().length;
+		var tmplMarkup = $('#address-template').html();
+		var compiledTmp1 = _.template(tmplMarkup, { id : count });
+		$('div.address').append(compiledTmp1);
+		//update form count
+		$('#id_address-TOTAL_FORMS').attr('value', count+1);
+	});
+</script>
+
+
+<script type="text/html" id="address-template">
+	<div id="address-<%= id %>">
+	<label for="id_address_set-<%= id %>-address_program">Address program:</label>
+	<input id="id_address_set-<%= id %>-address_program" maxlength="200" name="address_set-<%= id %>-address_program" type="text">
+	<label for="id_address_set-<%= id %>-address_ln1">Address ln1:</label>
+	<input id="id_address_set-<%= id %>-address_ln1" maxlength="200" name="address_set-<%= id %>-address_ln1" type="text">
+	<label for="id_address_set-<%= id %>-address_ln2">Address ln2:</label>
+	<input id="id_address_set-<%= id %>-address_ln2" maxlength="200" name="address_set-<%= id %>-address_ln2" type="text">
+	<label for="id_address_set-<%= id %>-address_city">Address city:</label>
+	<input id="id_address_set-<%= id %>-address_city" maxlength="200" name="address_set-<%= id %>-address_city" type="text">
+	<label for="id_address_set-<%= id %>-address_state">Address state:</label>
+	<input id="id_address_set-<%= id %>-address_state" maxlength="2" name="address_set-<%= id %>-address_state" type="text">
+	<label for="id_address_set-<%= id %>-address_zipcode">Address zipcode:</label>
+	<input id="id_address_set-<%= id %>-address_zipcode" name="address_set-<%= id %>-address_zipcode" type="number">
+	<label for="id_address_set-<%= id %>-address_moveindate">Address moveindate:</label>
+	<input id="id_address_set-<%= id %>-address_moveindate" name="address_set-<%= id %>-address_moveindate" type="text">
+	<label for="id_address_set-<%= id %>-DELETE">Delete:</label>
+	<input id="id_address_set-<%= id %>-DELETE" name="address_set-<%= id %>-DELETE" type="checkbox">
+	<input id="id_address_set-<%= id %>-participant" name="address_set-<%= id %>-participant" type="hidden">
+	<input id="id_address_set-<%= id %>-id" name="address_set-<%= id %>-id" type="hidden">
+	</div>
+</script>

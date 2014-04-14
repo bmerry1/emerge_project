@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>EMERGE - Add Participant</title>
+	<script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<link href="{% static 'css/default.css' %}" rel="stylesheet">
+	<script type="text/javascript">
+		$(function() {
+			$('.inline-{{ address_form.prefix }}').formset({
+				prefix: "{{ address_form.prefix }}",
+			})
+		})
+	</script>
+</head>
+
+<body>
+	<div>
+		<div id="sidebar">
+		<ul>
+			<li><a href="/emerge/dashboard/">Cancel</a></li>
+		</ul>
+		</div>
+		<h1>Add Participant</h1>
+		<form action="." method="post">
+			{% csrf_token %}
+			<div>
+				{{ form.as_p }}
+			</div>
+			<fieldset>
+				<legend>Address</legend>
+				{{ address_form.management_form }}
+				{{ address_form.non_form_errors }}
+				{% for form in address_form %}
+					{{ form.id }}
+					<div class="inline-{{ address_form.prefix }}">
+						{{ form.as_table }}
+					</div>
+				{% endfor %}
+			</fieldset>
+			<input type="submit" value="Add Participant" class="submit"/>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
-from enterdata.models import Participant, Address
+from enterdata.models import Participant, Address, Phone
 
 
 class UserForm(forms.ModelForm):
@@ -42,9 +42,11 @@ class ParticipantsForm(forms.ModelForm):
 	class Meta:
 		model = Participant
 
+class PhoneForm(forms.ModelForm):
+	class Meta:
+		model = Phone
+
 # inlineformset_factory creates a Class from a parent model (Participant)
 # to a child model (Address)
-ParticpantAddressFormSet = inlineformset_factory(
-	Participant,
-	Address,
-)
+ParticpantAddressFormSet = inlineformset_factory(Participant, Address, extra=1)
+ParticpantPhoneFormSet = inlineformset_factory(Participant, Phone)
