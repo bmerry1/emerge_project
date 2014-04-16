@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import CreateView
 from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet, PhoneForm, ParticpantPhoneFormSet
-from enterdata.models import Participant, Phone
+from enterdata.models import Participant, Address, Phone
 
 
 # Create your views here.
@@ -79,8 +79,29 @@ def all_participants(request):
 								{'all_participants': Participant.objects.all() })
 
 def participant(request, participants_id=1):
-	return render_to_response('enterdata/participant.html',
-								{'participant': Participant.objects.get(id=participants_id) })
+
+	context = RequestContext(request)
+	context_dict = {'participants_id': participants_id}
+
+	try:
+		participant = Participant.objects.get(id=participants_id)
+		context_dict['participant'] = participant
+
+		addresses = Address.objects.filter(participant=participant)
+
+		context_dict['addresses'] = addresses
+
+	except Participant.DoesNotExist:
+		pass
+
+	if request.method == 'POST':
+		query = request.POST.get('query')
+		if query:
+			query = query.strip()
+			result_list = run_query(query)
+			context_dict['result_list'] = result_list
+
+	return render_to_response('enterdata/participant.html', context_dict, context)
 
 # CBV for creating inline forms
 class ParticipantCreateView(CreateView):

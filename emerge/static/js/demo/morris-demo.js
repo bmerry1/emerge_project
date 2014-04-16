@@ -4,58 +4,58 @@ $(function() {
         element: 'morris-area-chart',
         data: [{
             period: '2010 Q1',
-            iphone: 2666,
-            ipad: null,
-            itouch: 2647
+            total: 2666,
+            reading: null,
+            numeracy: 2647
         }, {
             period: '2010 Q2',
-            iphone: 2778,
-            ipad: 2294,
-            itouch: 2441
+            total: 2778,
+            reading: 2294,
+            numeracy: 2441
         }, {
             period: '2010 Q3',
-            iphone: 4912,
-            ipad: 1969,
-            itouch: 2501
+            total: 4912,
+            reading: 1969,
+            numeracy: 2501
         }, {
             period: '2010 Q4',
-            iphone: 3767,
-            ipad: 3597,
-            itouch: 5689
+            total: 3767,
+            reading: 3597,
+            numeracy: 5689
         }, {
             period: '2011 Q1',
-            iphone: 6810,
-            ipad: 1914,
-            itouch: 2293
+            total: 6810,
+            reading: 1914,
+            numeracy: 2293
         }, {
             period: '2011 Q2',
-            iphone: 5670,
-            ipad: 4293,
-            itouch: 1881
+            total: 5670,
+            reading: 4293,
+            numeracy: 1881
         }, {
             period: '2011 Q3',
-            iphone: 4820,
-            ipad: 3795,
-            itouch: 1588
+            total: 4820,
+            reading: 3795,
+            numeracy: 1588
         }, {
             period: '2011 Q4',
-            iphone: 15073,
-            ipad: 5967,
-            itouch: 5175
+            total: 15073,
+            reading: 5967,
+            numeracy: 5175
         }, {
             period: '2012 Q1',
-            iphone: 10687,
-            ipad: 4460,
-            itouch: 2028
+            total: 10687,
+            reading: 4460,
+            numeracy: 2028
         }, {
             period: '2012 Q2',
-            iphone: 8432,
-            ipad: 5713,
-            itouch: 1791
+            total: 8432,
+            reading: 5713,
+            numeracy: 1791
         }],
         xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iPhone', 'iPad', 'iPod Touch'],
+        ykeys: ['total', 'reading', 'numeracy'],
+        labels: ['total', 'reading', 'numeracy'],
         pointSize: 2,
         hideHover: 'auto',
         resize: true

@@ -27,7 +27,7 @@ class UserProfile(models.Model):
 class Address(models.Model):
 
 	participant = models.ForeignKey(Participant)
-	address_program = models.CharField(max_length=200)
+	address_program = models.CharField(max_length=200, help_text="Program Name", blank=True)
 	address_ln1 = models.CharField(max_length=200)
 	address_ln2 = models.CharField(max_length=200)
 	address_city = models.CharField(max_length=200)
