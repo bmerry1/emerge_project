@@ -28,12 +28,12 @@ class Address(models.Model):
 
 	participant = models.ForeignKey(Participant)
 	address_program = models.CharField(max_length=200, help_text="Program Name", blank=True)
-	address_ln1 = models.CharField(max_length=200)
-	address_ln2 = models.CharField(max_length=200)
-	address_city = models.CharField(max_length=200)
-	address_state = models.CharField(max_length=2)
-	address_zipcode = models.IntegerField(max_length=5)
-	address_moveindate = models.DateField()
+	address_ln1 = models.CharField(max_length=200, help_text="Street Address", blank=True)
+	address_ln2 = models.CharField(max_length=200, help_text="Apartment No.", blank=True)
+	address_city = models.CharField(max_length=200, help_text="City")
+	address_state = models.CharField(max_length=2, help_text="State")
+	address_zipcode = models.CharField(max_length=5, help_text="Zipcode")
+	address_moveindate = models.DateField(help_text="Date of Move In")
 
 	class Meta:
 		unique_together = ('participant', 'address_moveindate',)
@@ -49,7 +49,7 @@ class Phone(models.Model):
 	participant = models.ForeignKey(Participant)
 	phone_type = models.CharField(max_length=200)
 	phone_number = models.CharField(max_length=10)
-	phone_date = models.DateField()
+	
 
 	def __unicode__(self):
 		return self.phone_number

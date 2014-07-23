@@ -103,7 +103,8 @@
                 <!-- /#side-menu -->
             </div>
             <!-- /.sidebar-collapse -->
-        </nav>
+        </div>
+    </nav>
 
     <!-- <div class="container"> -->
         <div id="page-wrapper">
@@ -148,7 +149,12 @@
 							{% for form in address_form %}
 							{{ form.id }}
 							<div class="inline-{{ address_form.prefix }}">
-								{{ form.as_table }}
+								<!-- {{ form.as_table }} -->
+								{% for field in form.visible_fields %}
+								{{ field.errors }}
+								{{ field.help_text }}<br />
+								{{ field }}<br />
+								{% endfor %}
 							</div>
 							{% endfor %}
 							</fieldset>
@@ -159,7 +165,22 @@
 			</div>
 	</div>
 
-	<script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+    <!-- Core Scripts - Include with every page -->
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/metisMenu/jquery.metisMenu.js' %}"></script>
+
+    <!-- Page-Level Plugin Scripts - Dashboard -->
+    <script src="{% static 'js/plugins/morris/raphael-2.1.0.min.js' %}"></script>
+    <!-- <script src="{% static 'js/plugins/morris/morris.js' %}"></script> -->
+
+    <!-- SB Admin Scripts - Include with every page -->
+    <script src="{% static 'js/sb-admin.js' %}"></script>
+
+    <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
+    <script src="{% static 'js/demo/dashboard-demo.js' %}"></script>
+    
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
 	<script src="{% static 'js/jquery.formset.js' %}"></script>
 	<script type="text/javascript">
 		$(function() {

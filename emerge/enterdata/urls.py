@@ -10,6 +10,6 @@ urlpatterns = patterns('',
 	url(r'^add_participant/$', enterdata.views.ParticipantCreateView.as_view(), name='add_participant'),
 	url(r'^all_participants/$', views.all_participants, name='all_participants'),
 	url(r'^participant/(?P<participants_id>\d+)/$', views.participant, name='participant'),
-	
+	url(r'^add_phone/(?P<participants_id>\d+)/$', views.add_phone, name='add_phone'),
 
 )

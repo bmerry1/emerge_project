@@ -7,11 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EMERGE - View or Edit Participants</title>
-
-
-    <!-- Page-Level Plugin CSS - Tables -->
-    <link href="{% static 'css/plugins/dataTables/dataTables.bootstrap.css' %}" rel="stylesheet">
+    <title>EMERGE - Add Phone</title>
 
     <!-- Core CSS - Include with every page -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -61,7 +57,7 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-        <div class="navbar-default navbar-static-side" role="navigation">
+            <div class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
@@ -110,75 +106,65 @@
         </div>
     </nav>
 
-    <div id="page-wrapper">
-    	<div class="row">
-    		<div class="col-lg-12">
-    			<h1 class="page-header">View and Edit Participants</h1>
-    		</div>
-    	</div>
-
-    	<div class="row">
-    		<div class="col-lg-12">
-    			<div class="panel panel-default">
-    				<div class="panel-heading">
-    					Table of All Participants
-    				</div>
-
-					<table class="table table-striped table-hover table-condensed" id="part_view">
-						<thead>
-							<tr>
-							<th>ID</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Gender</th>
-							<th>Age</th>
-							<th>Race</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for participant in all_participants %}
-							<tr class='clickableRow' href="/emerge/participant/{{ participant.id }}/">
-							<td><a href="/emerge/participant/{{ participant.id }}/">{{ participant.id }}</a></td>
-							<td>{{ participant.participant_fname }}</td>
-							<td>{{ participant.participant_lname }}</td>
-							<td>{{ participant.participant_gender }}</td>
-							<td>{{ participant.participant_age }}</td>
-							<td>{{ participant.participant_race }}</td>
-							</a>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+    <!-- <div class="container"> -->
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Add Phone</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            	<div class="col-lg-4">
+            		<div class="panel panel-info">
+            			<div class="panel-heading">Basic Demographic Information
+            			</div>
+            			<div class="panel-body">
+            				
+						<form class="form-signin span 4" id="user_form" action="." method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+							<div>
+								{% for field in form.visible_fields %}
+								{{ field.errors }}
+								{{ field.help_text }}<br />
+								{{ field }}<br />
+								{% endfor %}
+								<!-- {{ form.as_p }} -->
+							</div>
+                            <input type="submit" value="Add Phone" class="submit"/>
+                        </form>
+						<!-- </form> -->
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			
+			
 	</div>
 
-	    <!-- Core Scripts - Include with every page -->
+    <!-- Core Scripts - Include with every page -->
     <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/plugins/metisMenu/jquery.metisMenu.js' %}"></script>
 
     <!-- Page-Level Plugin Scripts - Dashboard -->
     <script src="{% static 'js/plugins/morris/raphael-2.1.0.min.js' %}"></script>
-    <script src="{% static 'js/plugins/morris/morris.js' %}"></script>
+    <!-- <script src="{% static 'js/plugins/morris/morris.js' %}"></script> -->
 
     <!-- SB Admin Scripts - Include with every page -->
-    <script src="{% static 'js/sb-admin.js' %}"></script>
+    <!-- <script src="{% static 'js/sb-admin.js' %}"></script> -->
 
     <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
     <script src="{% static 'js/demo/dashboard-demo.js' %}"></script>
 
-	<<script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
-    <script src="{% static 'js/plugins/dataTables/jquery.dataTables.js' %}"></script>
-    <!-- <script src="{% static 'js/plugins/dataTables/jquery.dataTables.js' %}"></script> -->
-
-	<script>
-		$(document).ready(function() {
-			$('#part_view').dataTable();
-		} );
+    <!-- <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script> -->
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('.inline-{{ address_form.prefix }}').formset({
+				prefix: "{{ address_form.prefix }}",
+			})
+		})
 	</script>
-
-
 </body>
 </html>

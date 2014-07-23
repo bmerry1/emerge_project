@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import CreateView
 from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet, PhoneForm, ParticpantPhoneFormSet
 from enterdata.models import Participant, Address, Phone
+from django.template.defaultfilters import linebreaksbr
+from django.core.context_processors import csrf
 
 
 # Create your views here.
@@ -88,8 +90,11 @@ def participant(request, participants_id=1):
 		context_dict['participant'] = participant
 
 		addresses = Address.objects.filter(participant=participant)
-
 		context_dict['addresses'] = addresses
+
+		phone = Phone.objects.filter(participant=participant)
+		context_dict['phone'] = phone
+		
 
 	except Participant.DoesNotExist:
 		pass
@@ -162,7 +167,33 @@ class ParticipantCreateView(CreateView):
 		return self.render_to_response(
 			self.get_context_data(form=form, address_form=address_form))
 
-		
+
+def add_phone(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = PhoneForm(request.POST)
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = PhoneForm()
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_phone.html', args)
+
+
+
+
 
 #def submit_address(request):
 #	if request.POST:

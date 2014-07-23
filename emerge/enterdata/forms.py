@@ -45,6 +45,7 @@ class ParticipantsForm(forms.ModelForm):
 class PhoneForm(forms.ModelForm):
 	class Meta:
 		model = Phone
+		fields = ('phone_type', 'phone_number')
 
 # inlineformset_factory creates a Class from a parent model (Participant)
 # to a child model (Address)
