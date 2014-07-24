@@ -3,8 +3,8 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import CreateView
-from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet, PhoneForm, ParticpantPhoneFormSet
-from enterdata.models import Participant, Address, Phone
+from enterdata.forms import ParticipantsForm, ParticpantAddressFormSet, PhoneForm, ParticpantPhoneFormSet, EmergencyForm, FamilyForm, ProbationForm, LegalForm, LiteracyForm, KhanForm, OrientForm, VoskillsForm, WstatusForm, HoursForm, ProgramForm, CrewForm, SalaryForm
+from enterdata.models import Participant, Address, Phone, Emergency, Family, Probation, Legal, Literacy_numeracy, Khan, Orientation, Voskills, Work_status, Hours, Program_enrollment, Crew_status, Salary
 from django.template.defaultfilters import linebreaksbr
 from django.core.context_processors import csrf
 
@@ -94,7 +94,46 @@ def participant(request, participants_id=1):
 
 		phone = Phone.objects.filter(participant=participant)
 		context_dict['phone'] = phone
-		
+
+		emergency = Emergency.objects.filter(participant=participant)
+		context_dict['emergency'] = emergency
+
+		family = Family.objects.filter(participant=participant)
+		context_dict['family'] = family
+
+		probation = Probation.objects.filter(participant=participant)
+		context_dict['probation'] = probation
+
+		legal = Legal.objects.filter(participant=participant)
+		context_dict['legal'] = legal
+
+		literacy = Literacy_numeracy.objects.filter(participant=participant)
+		context_dict['literacy'] = literacy
+
+		khan = Khan.objects.filter(participant=participant)
+		context_dict['khan'] = khan
+
+		orient = Orientation.objects.filter(participant=participant)
+		context_dict['orient'] = orient
+
+		voskills = Voskills.objects.filter(participant=participant)
+		context_dict['voskills'] = voskills
+
+		wstatus = Work_status.objects.filter(participant=participant)
+		context_dict['wstatus'] = wstatus
+
+		hours = Hours.objects.filter(participant=participant)
+		context_dict['hours'] = hours
+
+		program = Program_enrollment.objects.filter(participant=participant)
+		context_dict['program'] = program
+
+		crew = Crew_status.objects.filter(participant=participant)
+		context_dict['crew'] = crew
+
+		salary = Salary.objects.filter(participant=participant)
+		context_dict['salary'] = salary
+
 
 	except Participant.DoesNotExist:
 		pass
@@ -191,6 +230,306 @@ def add_phone(request, participants_id):
 
 		return render_to_response('enterdata/add_phone.html', args)
 
+
+def add_emergency(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = EmergencyForm(request.POST)
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = EmergencyForm()
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_emergency.html', args)
+
+def add_family(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = FamilyForm(request.POST)
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = FamilyForm()
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_family.html', args)
+
+def add_probation(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = ProbationForm(request.POST)
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = ProbationForm()
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_probation.html', args)
+
+
+def add_legal(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = LegalForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = LegalForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_legal.html', args)
+
+def add_lit(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = LiteracyForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = LiteracyForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_lit.html', args)
+
+def add_khan(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = KhanForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = KhanForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_khan.html', args)
+
+def add_orient(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = OrientForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = OrientForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_orient.html', args)
+
+def add_voskills(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = VoskillsForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = VoskillsForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_voskills.html', args)
+
+def add_wstatus(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = WstatusForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = WstatusForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_wstatus.html', args)
+
+def add_hours(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = HoursForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = HoursForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_hours.html', args)
+
+def add_program(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = ProgramForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = ProgramForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_program.html', args)
+
+def add_crew(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = CrewForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = CrewForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_crew.html', args)
+
+def add_salary(request, participants_id):
+	p = Participant.objects.get(id=participants_id)
+
+	if request.method == "POST":
+		f = SalaryForm(request.POST)		#change form name
+		if f.is_valid():
+			c = f.save(commit=False)
+			c.participant = p
+			c.save()
+
+			return HttpResponseRedirect('/emerge/participant/%s' % participants_id)	
+
+	else:
+		f = SalaryForm()					#change form name
+
+		args = {}
+		args.update(csrf(request))
+
+		args['participant'] = p
+		args['form'] = f
+
+		return render_to_response('enterdata/add_salary.html', args)
 
 
 

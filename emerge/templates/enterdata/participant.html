@@ -96,19 +96,19 @@
                                 <a href="/emerge/add_phone/{{ participant.id }}/">Phone Number</a>
                             </li>
                             <li>
-                                <a href="#">Emergency Contact</a>
+                                <a href="/emerge/add_emergency/{{ participant.id }}/">Emergency Contact</a>
                             </li>
                             <li>
-                                <a href="#">Family Information</a>
+                                <a href="/emerge/add_family/{{ participant.id }}/">Family Information</a>
                             </li>
                             <li>
                                 <a href="#">Legal System<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
                                     <li>
-                                        <a href="#">Probation</a>
+                                        <a href="/emerge/add_probation/{{ participant.id }}/">Probation</a>
                                     </li>
                                     <li>
-                                        <a href="#">Conviction</a>
+                                        <a href="/emerge/add_legal/{{ participant.id }}/">Conviction</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-third-level -->
@@ -117,31 +117,31 @@
                                 <a href="#">Literacy/Numeracy<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
                                     <li>
-                                        <a href="#">Results</a>
+                                        <a href="/emerge/add_lit/{{ participant.id }}/">Results</a>
                                     </li>
                                     <li>
-                                        <a href="#">Khan Enrollment</a>
+                                        <a href="/emerge/add_khan/{{ participant.id }}/">Khan Enrollment</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-third-level -->
                             </li>
                             <li>
-                                <a href="#">Orientation</a>
+                                <a href="/emerge/add_orient/{{ participant.id }}/">Orientation</a>
                             </li>
                             <li>
                                 <a href="#">Work Information<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
                                     <li>
-                                        <a href="#">Vocational Skills</a>
+                                        <a href="/emerge/add_voskills/{{ participant.id }}/">Vocational Skills</a>
                                     </li>
                                     <li>
-                                        <a href="#">Crew Status</a>
+                                        
                                     </li>
                                     <li>
-                                        <a href="#">Work Status</a>
+                                        <a href="/emerge/add_wstatus/{{ participant.id }}/">Work Status</a>
                                     </li>
                                     <li>
-                                        <a href="#">Salary</a>
+                                        <a href="/emerge/add_hours/{{ participant.id }}/">Hours</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-third-level -->
@@ -150,10 +150,13 @@
                                 <a href="#">Program Status<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
                                     <li>
-                                        <a href="#">Enrollment</a>
+                                        <a href="/emerge/add_program/{{ participant.id }}/">Enrollment</a>
                                     </li>
                                     <li>
-                                        <a href="#">Hours</a>
+                                        <a href="/emerge/add_crew/{{ participant.id }}/">Crew Status</a>
+                                    </li>
+                                    <li>
+                                        <a href="/emerge/add_salary/{{ participant.id }}/">Salary</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-third-level -->
@@ -222,7 +225,15 @@
 						</div>
 						<div class="panel-body">
 							<div align="center">
-								<strong>No emergency contact information currently listed.</strong>
+                                {% if emergency %}
+                                {% for emergency in emergency %}
+                                First Name: {{ emergency.emergency_fname }}<br>
+                                Last Name: {{ emergency.emergency_lname }}<br>
+                                Phone:  {{ emergency.emergency_phone }}
+                                {% endfor %}
+                                {% else %}
+                                <strong>No emergency contact information currently listed.</strong>
+                                {% endif %}
 							</div>
 						</div>
 					</div>
@@ -265,7 +276,14 @@
 									</div>
 									<div id="collapseOne" class="panel-collapse collapse">
 										<div class="panel-body">
-											This section will provide a summary of the participant's family and living situation.
+											{% if family %}
+                                            {% for family in family %}
+                                            Residence Type: {{ family.family_residence }}<br>
+                                            Last Name: {{ family.family_children }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No family information listed.</strong>
+                                            {% endif %}
 										</div>
 									</div>
 								</div>
@@ -277,7 +295,28 @@
                                     </div>
                                     <div id="collapseTwo" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            This section will provide a summary of the participants probation information and prior involvement in the legal system.
+                                            <strong>Probation Information</strong><br>
+                                            {% if probation %}
+                                            {% for probation in probation %}
+                                            Name: {{ probation.probation_name }}<br>
+                                            Contact Phone: {{ probation.probation_phone }}<br>
+                                            End Date: {{ probation.probation_end_dt }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No probation information listed.</strong><br>
+                                            {% endif %}
+                                            <br>
+                                            <strong>Conviction Information</strong><br>
+                                            {% if legal %}
+                                            {% for legal in legal %}
+                                            Charges: {{ legal.legal_charges }}<br>
+                                            Conviction Date: {{ legal.legal_convict_dt }}<br>
+                                            Time Incarcerated: {{ legal.legal_time_incar }}<br>
+                                            Supervisor: {{ legal.legal_supervisor }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No conviction information listed.</strong><br>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +328,27 @@
                                     </div>
                                     <div id="collapseThree" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            This section will provide a summary table of the participant's literacy, numeracy, and Khan academy scores and involvement.
+                                             <strong>Literacy and Numeracy Information</strong><br>
+                                            {% if literacy %}
+                                            {% for literacy in literacy %}
+                                            Assessment Timepoint: {{ literacy.litnum_timepoint }}<br>
+                                            Assessment Type: {{ literacy.litnum_type }}<br>
+                                            Assessment Date: {{ literacy.litnum_dt }}<br>
+                                            Raw Score {{ literacy.litnum_raw }}<br>
+                                            CASAS Score: {{ literacy.litnum_casas }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No literacy or numeracy information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
+                                            <strong>Khan Information</strong><br>
+                                            {% if khan %}
+                                            {% for khan in khan %}
+                                            Khan Training Date: {{ khan.khan_dt }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No Khan Academy information listed.</strong><br>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -301,7 +360,25 @@
                                     </div>
                                     <div id="collapseFour" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            This section will provide a summary of the participant's information collected during orientation and progress through orientation.
+                                            {% if orient %}
+                                            {% for orient in orient %}
+                                            Cohort Information: {{ orient.orientation_group }}<br>
+                                            Referral Source: {{ orient.orientation_referral }}<br>
+                                            Supervisor: {{ orient.orientation_supervision }}<br>
+                                            Orientation Start Date: {{ orient.orientation_startdt }}<br>
+                                            Date Completed Orientation: {{ orient.orientation_compdt }}<br>
+                                            Education: {{ orient.orientation_education_level }}<br>
+                                            Insured: {{ orient.orientation_medical_insurance }}<br>
+                                            Date Assessed: {{ orient.orientation_assessdt }}<br>
+                                            Workshop Start Date: {{ orient.orientation_wksp_startdt }}<br>
+                                            Workshop End Date: {{ orient.orientation_wksp_enddt }}<br>
+                                            Workshop Completion Status: {{ orient.orientation_wksp_complete }}<br>
+                                            Date of Program Enrollment: {{ orient.orientation_enrolleddt }}<br>
+                                            First Day on EMERGE Payroll: {{ orient.orientation_firstpayrolldt }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No orientation information listed.</strong><br>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -313,7 +390,45 @@
                                     </div>
                                     <div id="collapseFive" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            This section will provide a summary of the participant's vocational skills, crew status, work status and salary information.
+                                             <strong>Vocational Skill Information</strong><br>
+                                            {% if voskills %}
+                                            {% for voskills in voskills %}
+                                            OSHA Certified: {{ voskills.voskills_osha }}<br>
+                                            OSHA Card: {{ voskills.voskills_osha_card }}<br>
+                                            CT Driver's License: {{ voskills.voskills_ct_driver }}<br>
+                                            Primary Skill {{ voskills.voskills_primary }}<br>
+                                            Community Service: {{ voskills.voskills_service }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No vocational skill information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
+                                            <strong>Work Status Information</strong><br>
+                                            {% if wstatus %}
+                                            {% for wstatus in wstatus %}
+                                            Start Date: {{ wstatus.wstatus_start_dt }}<br>
+                                            End Date: {{ wstatus.wstatus_exit_dt }}<br>
+                                            How Referred Out: {{ wstatus.wstatus_exit_status }}<br>
+                                            CORE Participation Status: {{ wstatus.wstatus_core_part }}<br>
+                                            Participant Success {{ wstatus.wstatus_success }}<br>
+                                            Related Notes: {{ wstatus.wstatus_notes }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No work status information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
+                                            <strong>Activity Information</strong><br>
+                                            {% if hours %}
+                                            {% for hours in hours %}
+                                            <br>
+                                            Activity Engaged In: {{ hours.hours_activity }}<br>
+                                            Date of Activity: {{ hours.hours_date }}<br>
+                                            Amount of Hours: {{ hours.hours_amt }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No activity information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +440,42 @@
                                     </div>
                                     <div id="collapseSix" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            This section will provide a summary of the participant's program involvement and hours of activity.
+                                            <strong>Program Information</strong><br>
+                                            {% if program %}
+                                            {% for program in program %}
+                                            SSN (Last 4 Digits): {{ program.penroll_ssn }}<br>
+                                            Complete Program: {{ program.penroll_complete }}<br>
+                                            Exit Date: {{ program.penroll_exit_dt }}<br>
+                                            Exist Status {{ program.penroll_exit_status }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No program information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
+                                            <strong>Crew Information</strong><br>
+                                            {% if crew %}
+                                            {% for crew in crew %}
+                                            Employment Type: {{ crew.crewstat_emply_type }}<br>
+                                            Employer: {{ crew.crewstat_employer }}<br>
+                                            Work Start Date: {{ crew.crewstat_startdt }}<br>
+                                            Notes: {{ crew.crewstat_status }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No crew information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
+                                            <strong>Salary Information</strong><br>
+                                            {% if salary %}
+                                            {% for salary in salary %}
+                                            <br>
+                                            Date Salary Recorded: {{ salary.salary_date }}<br>
+                                            Salary Amount: {{ salary.salary_amt }}<br>
+                                            Salary Scale: {{ salary.salary_scale }}<br>
+                                            {% endfor %}
+                                            {% else %}
+                                            <strong>No activity information provided.</strong><br>
+                                            {% endif %}
+                                            <br>
                                         </div>
                                     </div>
                                 </div>
